@@ -2,7 +2,7 @@ function initialize() {
   var route1Latlng = new google.maps.LatLng(49.279933, -123.109557);
   var mapOptions = {
      center: route1Latlng,
-     zoom: 11,
+     zoom: 8,
      mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -23,9 +23,9 @@ function initialize() {
      });
      var poly = new google.maps.Polyline({
        path: points,
-       strokeColor: "#FF00AA",
-       strokeOpacity: .7,
-       strokeWeight: 4
+       strokeColor: "#F9690E",
+       strokeOpacity: .5,
+       strokeWeight: 2
      });
      poly.setMap(map);
      map.fitBounds(bounds);
