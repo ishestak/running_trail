@@ -1,40 +1,67 @@
+var map;
 var marker;
 function initialize() {
   var route1Latlng = new google.maps.LatLng(49.279933, -123.109557);
   var mapOptions = {
      center: route1Latlng,
-     zoom: 8,
+     zoom: 12,
      mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
   $.ajax({
    type: "GET",
-   url: "crabpark.gpx",
+   url: "Seawall_Race.gpx",
    dataType: "xml",
    success: function (xml){ 
+     var start;
+     var end;
      var points = [];
      var bounds = new google.maps.LatLngBounds();
-     $(xml).find("trkpt").each(function () {
+     $(xml).find("trkpt").each(function() {
        var lat = $(this).attr("lat");
        var lon = $(this).attr("lon");
-       var start = $(this).first();
-       var end = $(this).last();
        var p = new google.maps.LatLng(lat, lon);
        points.push(p);
        bounds.extend(p);
      });
-     var poly = new google.maps.Polyline({
+       var startRoute = function() {
+         latStart = $(xml).find("trkpt").first().attr("lat");
+         lonStart = $(xml).find("trkpt").first().attr("lon");
+         start = new google.maps.LatLng(latStart, lonStart);
+         dropStartMarker(start);
+       } 
+       var endRoute = function() {
+        latEnd = $(xml).find("trkpt").last().attr("lat");
+        lonEnd = $(xml).find("trkpt").last().attr("lon");
+        end = new google.maps.LatLng(latEnd, lonEnd);
+        dropEndMarker(end);
+       }    
+       var poly = new google.maps.Polyline({
        path: points,
        strokeColor: "#F9690E",
        strokeOpacity: .5,
        strokeWeight: 2
      });
-     var marker = new google.maps.maps.Marker
-
      poly.setMap(map);
      map.fitBounds(bounds);
+     startRoute();
+     endRoute();
    }
  });
+ function dropStartMarker(start) {
+   var marker = new google.maps.Marker({
+    map: map,
+    position: start,
+    title: "I start my run here, woop!"          
+   });
+ }
+ function dropEndMarker(end) {
+   var marker = new google.maps.Marker({
+    map: map,
+    position: end,
+    title: "I end my run here, woop!"          
+   });
+ }
 }
 google.maps.event.addDomListener(window, 'load', initialize);
