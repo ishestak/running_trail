@@ -21,23 +21,22 @@ function initialize() {
      $(xml).find("trkpt").each(function() {
        var lat = $(this).attr("lat");
        var lon = $(this).attr("lon");
-       var startRoute = function(){
-        latStart = $(this).first().attr("lat");
-        lonStart = $(this).first().attr("lon");
-        start = new google.maps.LatLng(latStart, lonStart);
-        dropStartMarker(start); 
-       } 
-       var endRoute = function(){
-        latEnd = $(this).last().attr("lat");
-        latEnd = $(this).first().attr("lon");
-        end = new google.maps.LatLng(latEnd, lonEnd);
-        dropEndMarker(end);
-       } 
        var p = new google.maps.LatLng(lat, lon);
        points.push(p);
        bounds.extend(p);
      });
-     var poly = new google.maps.Polyline({
+       var startRoute = function() {
+         latStart = $(xml).find("trkpt").first().attr("lat");
+         lonStart = $(xml).find("trkpt").first().attr("lat");
+         start = new google.maps.LatLng(latStart, lonStart);
+       } 
+       var endRoute = function(){
+        latEnd = $(xml).find("trkpt").last().attr("lat");
+        lonEnd = $(xml).find("trkpt").last().attr("lon");
+        end = new google.maps.LatLng(latEnd, lonEnd);
+        dropEndMarker(end);
+       }    
+       var poly = new google.maps.Polyline({
        path: points,
        strokeColor: "#F9690E",
        strokeOpacity: .5,
@@ -45,18 +44,20 @@ function initialize() {
      });
      poly.setMap(map);
      map.fitBounds(bounds);
+     startRoute();
+     endRoute();
    }
  });
  function dropStartMarker(start) {
    var marker = new google.maps.Marker({
-    map:map,
+    map: map,
     position: start,
     title: "I start my run here, woop!"          
    });
  }
  function dropEndMarker(end) {
    var marker = new google.maps.Marker({
-    map:map,
+    map: map,
     position: end,
     title: "I end my run here, woop!"          
    });
