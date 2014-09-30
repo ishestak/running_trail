@@ -1,3 +1,4 @@
+var marker;
 function initialize() {
   var route1Latlng = new google.maps.LatLng(49.279933, -123.109557);
   var mapOptions = {
@@ -17,6 +18,8 @@ function initialize() {
      $(xml).find("trkpt").each(function () {
        var lat = $(this).attr("lat");
        var lon = $(this).attr("lon");
+       var start = $(this).first();
+       var end = $(this).last();
        var p = new google.maps.LatLng(lat, lon);
        points.push(p);
        bounds.extend(p);
@@ -27,6 +30,8 @@ function initialize() {
        strokeOpacity: .5,
        strokeWeight: 2
      });
+     var marker = new google.maps.maps.Marker
+
      poly.setMap(map);
      map.fitBounds(bounds);
    }
