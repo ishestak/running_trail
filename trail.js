@@ -24,24 +24,14 @@ function initialize() {
        var startRoute = function(){
         latStart = $(this).first().attr("lat");
         lonStart = $(this).first().attr("lon");
-        var s = new google.maps.LatLng(latStart, lonStart);
-         var marker = new google.maps.Marker({
-          map:map,
-          position: s,
-          title: "I start my run here, woop!"          
-         });
-       console.log(s);
+        start = new google.maps.LatLng(latStart, lonStart);
+        dropStartMarker(start); 
        } 
-       var endStart = function(){
+       var endRoute = function(){
         latEnd = $(this).last().attr("lat");
         latEnd = $(this).first().attr("lon");
-        var e = new google.maps.LatLng(latEnd, lonEnd);
-         var marker = new google.maps.Marker({
-          map:map,
-          position: e,
-          title: "I end my run here, woop!"          
-         });
-        console.log(e);
+        end = new google.maps.LatLng(latEnd, lonEnd);
+        dropEndMarker(end);
        } 
        var p = new google.maps.LatLng(lat, lon);
        points.push(p);
@@ -57,5 +47,19 @@ function initialize() {
      map.fitBounds(bounds);
    }
  });
+ function dropStartMarker(start) {
+   var marker = new google.maps.Marker({
+    map:map,
+    position: start,
+    title: "I start my run here, woop!"          
+   });
+ }
+ function dropEndMarker(end) {
+   var marker = new google.maps.Marker({
+    map:map,
+    position: end,
+    title: "I end my run here, woop!"          
+   });
+ }
 }
 google.maps.event.addDomListener(window, 'load', initialize);
