@@ -27,10 +27,11 @@ function initialize() {
      });
        var startRoute = function() {
          latStart = $(xml).find("trkpt").first().attr("lat");
-         lonStart = $(xml).find("trkpt").first().attr("lat");
+         lonStart = $(xml).find("trkpt").first().attr("lon");
          start = new google.maps.LatLng(latStart, lonStart);
+         dropStartMarker(start);
        } 
-       var endRoute = function(){
+       var endRoute = function() {
         latEnd = $(xml).find("trkpt").last().attr("lat");
         lonEnd = $(xml).find("trkpt").last().attr("lon");
         end = new google.maps.LatLng(latEnd, lonEnd);
